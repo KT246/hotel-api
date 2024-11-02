@@ -7,7 +7,7 @@ const connectDB = require("./config/db");
 
 const { readdirSync } = require("fs");
 
-// require("dotenv").config();
+require("dotenv").config();
 
 const app = express();
 
