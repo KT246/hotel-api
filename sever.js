@@ -1,4 +1,3 @@
-require("dotenv").config();
 // step 1
 const express = require("express");
 const morgan = require("morgan");
@@ -8,15 +7,11 @@ const connectDB = require("./config/db");
 
 const { readdirSync } = require("fs");
 
+require("dotenv").config();
+
 const app = express();
 
-const mongoose = require("mongoose");
-
-mongoose.Promise = global.Promise;
-const checkDB = mongoose.connect(process.env.MONGODB_URI);
-if (checkDB) {
-  console.log("connected!");
-}
+connectDB();
 
 app.use(morgan("dev"));
 app.use(express.json());
