@@ -10,7 +10,13 @@ const { readdirSync } = require("fs");
 
 const app = express();
 
-connectDB();
+const mongoose = require("mongoose");
+
+mongoose.Promise = global.Promise;
+const checkDB = mongoose.connect(process.env.MONGODB_URI);
+if (checkDB) {
+  console.log("connected!");
+}
 
 app.use(morgan("dev"));
 app.use(express.json());
