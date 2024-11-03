@@ -1,27 +1,29 @@
-// step 1
+// Step 1
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 
 const connectDB = require("./config/db");
-
 const { readdirSync } = require("fs");
 
 require("dotenv").config();
 
 const app = express();
 
+// Kết nối đến cơ sở dữ liệu
 connectDB();
 
-app.use(morgan("dev"));
-app.use(express.json());
-app.use(cors());
+// Middleware
+app.use(morgan("dev")); // Logger middleware
+app.use(express.json()); // Parse JSON bodies
+app.use(cors()); // Enable CORS
 
+// Đọc các route từ thư mục routes và thêm vào ứng dụng
 readdirSync("./routes").map((route) =>
   app.use("/api", require("./routes/" + route))
 );
-// app.use("/api", authRouter);
-// app.use("/api", productRouter);
 
-// step 2
-app.listen(5001, () => console.log("Server is running on port 5001"));
+// Step 2
+// Lắng nghe trên cổng từ biến môi trường hoặc cổng mặc định
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
